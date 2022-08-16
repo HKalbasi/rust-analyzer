@@ -685,6 +685,8 @@ dependencies = [
  "hir",
  "ide-db",
  "itertools",
+ "linter_adapter",
+ "linter_api",
  "profile",
  "serde_json",
  "sourcegen",
@@ -839,6 +841,21 @@ dependencies = [
 [[package]]
 name = "limit"
 version = "0.0.0"
+
+[[package]]
+name = "linter_adapter"
+version = "0.1.0"
+dependencies = [
+ "libloading",
+ "linter_api",
+]
+
+[[package]]
+name = "linter_api"
+version = "0.1.0"
+dependencies = [
+ "visibility",
+]
 
 [[package]]
 name = "lock_api"
@@ -1936,6 +1953,17 @@ dependencies = [
  "tracing",
  "vfs",
  "walkdir",
+]
+
+[[package]]
+name = "visibility"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8881d5cc0ae34e3db2f1de5af81e5117a420d2f937506c2dc20d6f4cfb069051"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
