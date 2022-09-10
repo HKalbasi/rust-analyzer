@@ -687,6 +687,7 @@ dependencies = [
  "itertools",
  "linter_adapter",
  "linter_api",
+ "once_cell",
  "profile",
  "serde_json",
  "sourcegen",

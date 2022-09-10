@@ -1,30 +1,13 @@
 //! Suggests shortening `Foo { field: field }` to `Foo { field }` in both
 //! expressions and patterns.
 
-use hir::Static;
 use ide_db::{base_db::FileId, source_change::SourceChange};
-use linter_api::{context::{DriverContext, AstContext}, ast::{Crate, CrateId, item::{ItemType, StaticItem, CommonItemData}}};
 use syntax::{ast, match_ast, AstNode, SyntaxNode};
 use text_edit::TextEdit;
 
 use crate::{fix, Diagnostic, Severity};
 
-struct RADriver;
-const RA_AST_CONTEXT: &AstContext<'static> = &AstContext::new(&RADriver);
-
-impl<'ast> DriverContext<'ast> for RADriver {
-    fn emit_lint(&self, s: &str, lint: &'ast linter_api::lint::Lint) {
-        todo!()
-    }
-
-    fn emit_lint_span(&self, s: &str, lint: &'ast linter_api::lint::Lint, sp: &dyn linter_api::ast::Span<'_>) {
-        todo!()
-    }
-}
-
 pub(crate) fn field_shorthand(acc: &mut Vec<Diagnostic>, file_id: FileId, node: &SyntaxNode) {
-    let mut x = linter_adapter::Adapter::new_from_paths(["/home/hamid/oss/rust-linting/target/stable/debug/liblinter_lints.so"]);
-    x.process_krate(RA_AST_CONTEXT, &Crate::new(CrateId::new(0), &[]));
     match_ast! {
         match node {
             ast::RecordExpr(it) => check_expr_field_shorthand(acc, file_id, it),
