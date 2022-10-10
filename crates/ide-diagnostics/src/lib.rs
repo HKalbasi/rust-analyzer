@@ -51,6 +51,7 @@ mod handlers {
     pub(crate) mod useless_braces;
     pub(crate) mod unlinked_file;
     pub(crate) mod json_is_not_rust;
+    pub(crate) mod external_lints;
 }
 
 #[cfg(test)]
@@ -148,6 +149,7 @@ pub struct DiagnosticsConfig {
     pub disable_experimental: bool,
     pub disabled: FxHashSet<String>,
     pub expr_fill_default: ExprFillDefaultMode,
+    pub external_lints: String,
     // FIXME: We may want to include a whole `AssistConfig` here
     pub insert_use: InsertUseConfig,
     pub prefer_no_std: bool,
@@ -164,6 +166,8 @@ impl DiagnosticsConfig {
             disable_experimental: Default::default(),
             disabled: Default::default(),
             expr_fill_default: Default::default(),
+            external_lints: "../../../rust-linting/target/linter/lints/liblinter_lints.so"
+                .to_string(),
             insert_use: InsertUseConfig {
                 granularity: ImportGranularity::Preserve,
                 enforce_granularity: false,
@@ -201,6 +205,8 @@ pub fn diagnostics(
     );
 
     let parse = sema.parse(file_id);
+
+    handlers::external_lints::external_lints(&mut res, file_id, &parse, &config);
 
     for node in parse.syntax().descendants() {
         handlers::useless_braces::useless_braces(&mut res, file_id, &node);

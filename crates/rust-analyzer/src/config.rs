@@ -955,6 +955,7 @@ impl Config {
                 ExprFillDefaultDef::Todo => ExprFillDefaultMode::Todo,
                 ExprFillDefaultDef::Default => ExprFillDefaultMode::Default,
             },
+            external_lints: "".to_string(),
             insert_use: self.insert_use_config(),
             prefer_no_std: self.data.imports_prefer_no_std,
         }
